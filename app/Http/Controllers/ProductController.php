@@ -76,7 +76,7 @@ class ProductController extends Controller
             'stock' => 'required'
         ]);
 
-        $product = Product::find($request->id);
+        $product = Product::find($id);
         if ($product){
             $product->description = $request->description;
             $product->price = $request->price;
@@ -85,7 +85,7 @@ class ProductController extends Controller
 
             return $product;
         }
-        return response()->json(['id' => $request->id, 'message' => 'Not Found'], 404);
+        return response()->json(['id' => $id, 'message' => 'Not Found'], 404);
     }
 
     /**

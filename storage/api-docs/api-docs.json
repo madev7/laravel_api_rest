@@ -154,17 +154,44 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Products"
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "example": "TV",
+                    "description": "Product Name"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 50,
+                    "description": "Product price"
+                  },
+                  "stock": {
+                    "type": "integer",
+                    "example": 10,
+                    "description": "quantity of products"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "example": "2023-02-23T00:09:16.000000Z",
+                    "description": "creation date"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "example": "2023-02-23T00:09:16.000000Z",
+                    "description": "update date"
+                  }
+                }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
