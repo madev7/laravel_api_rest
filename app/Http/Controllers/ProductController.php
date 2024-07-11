@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
+
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
+    * Display a list of resources.
+    **/
     public function index()
     {
         $product = Product::all();
@@ -25,24 +26,35 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
+    * Store a newly created resource in storage.
+    */
     public function store(Request $request)
     {
+        $request->validate([
+            'description' => 'required',
+            'price' => 'required',
+            'stock' => 'required'
+        ]);
+
         $product = new Product();
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
         $product->save();
+
+        return $product;
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    * Display the specified resource.
+    */
+    public function show(Request $request)
     {
-        $product = Product::find($id);
-        return $product;
+        $product = Product::find($request->id);
+        if ($product) {
+            return $product;
+        }
+        return response()->json(['id' => $request->id, 'message' => 'Not Found'], 404);
     }
 
     /**
@@ -54,25 +66,42 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
+    * Update the specified resource in storage.
+    */
     public function update(Request $request, string $id)
     {
-        $product = Product::findOrFail($request->id);
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-        $product->save();
+        $request->validate([
+            'description' => 'required',
+            'price' => 'required',
+            'stock' => 'required'
+        ]);
 
-        return $product;
+        $product = Product::find($id);
+        if ($product){
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+            $product->save();
+
+            return $product;
+        }
+        return response()->json(['id' => $id, 'message' => 'Not Found'], 404);
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
+    * Remove the specified resource from storage.
+    */
     public function destroy(Request $request, string $id)
     {
-        $product = Product::destroy($request->id);
+        $product = Product::find($id);
+
+        if(is_null($product))
+        {
+            return response()->json(['id' => $request->id, 'message' => 'Not Found'], 404);
+        }
+
+        $product->delete();
+
         return $product;
     }
 }

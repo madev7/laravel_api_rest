@@ -1,0 +1,339 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger API Products",
+    "description": "This rest api allows you to perform operations on the products database.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://laravelapirest-production.up.railway.app/api/products"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Products",
+      "description": "Everything about your Products"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Display a list of resources.",
+        "description": "see all products",
+        "operationId": "see all products",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Store a newly created resource in storage.",
+        "description": "Add a new product to the store",
+        "operationId": "addProduct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "example": "TV",
+                    "description": "Product Name"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 50,
+                    "description": "Product price"
+                  },
+                  "stock": {
+                    "type": "integer",
+                    "example": 10,
+                    "description": "quantity of products"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable"
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Display the specified resource",
+        "description": "Display the specified resource",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idproduct"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update the specified resource in storage",
+        "description": "Update the specified resource in storage",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idproduct"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "example": "TV",
+                    "description": "Product Name"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 50,
+                    "description": "Product price"
+                  },
+                  "stock": {
+                    "type": "integer",
+                    "example": 10,
+                    "description": "quantity of products"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "example": "2023-02-23T00:09:16.000000Z",
+                    "description": "creation date"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "example": "2023-02-23T00:09:16.000000Z",
+                    "description": "update date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Remove the specified resource from storage",
+        "description": "Remove the specified resource from storage",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idproduct"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/notFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "unauthorized": {
+        "description": "{unauthorized} You are not authorized."
+      },
+      "notFound": {
+        "description": "{notFound} Information was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "example": 1,
+                  "type": "integer"
+                },
+                "message": {
+                  "example": "Not Found",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "badRequest": {
+        "description": "{badRequest} Data sent is incorrect."
+      },
+      "unprocessable": {
+        "description": "{unprocessable content} All fields are required"
+      }
+    },
+    "parameters": {
+      "token": {
+        "in": "header",
+        "name": "token",
+        "description": "Authentication Token",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "idproduct": {
+        "name": "id",
+        "in": "path",
+        "description": "Product Id",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "schemas": {
+      "Products": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1,
+            "description": "Product id"
+          },
+          "description": {
+            "type": "string",
+            "example": "TV",
+            "description": "Product Name"
+          },
+          "price": {
+            "type": "number",
+            "example": 50,
+            "description": "Product price"
+          },
+          "stock": {
+            "type": "integer",
+            "example": 10,
+            "description": "quantity of products"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2023-02-23T00:09:16.000000Z",
+            "description": "creation date"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2023-02-23T00:09:16.000000Z",
+            "description": "update date"
+          }
+        }
+      }
+    }
+  }
+}
