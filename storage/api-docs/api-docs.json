@@ -26,9 +26,6 @@
         "description": "see all products",
         "operationId": "see all products",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/token"
-          }
         ],
         "responses": {
           "200": {
@@ -54,9 +51,6 @@
         "description": "Add a new product to the store",
         "operationId": "addProduct",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/token"
-          }
         ],
         "requestBody": {
           "content": {
@@ -115,9 +109,6 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/idproduct"
-          },
-          {
-            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -148,9 +139,6 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/idproduct"
-          },
-          {
-            "$ref": "#/components/parameters/token"
           }
         ],
         "requestBody": {
@@ -221,9 +209,6 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/idproduct"
-          },
-          {
-            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
