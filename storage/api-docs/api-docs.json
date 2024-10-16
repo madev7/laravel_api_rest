@@ -7,17 +7,244 @@
   },
   "servers": [
     {
-      "url": "https://laravelapirest-production.up.railway.app/api/products"
+      "url": "http://localhost/api"
     }
   ],
   "tags": [
+    {
+      "name": "User Authentication",
+      "description": "User registration, login and logout"
+    },
     {
       "name": "Products",
       "description": "Everything about your Products"
     }
   ],
   "paths": {
-    "/": {
+    "/register": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Store a newly created user.",
+        "description": "Add a new user",
+        "operationId": "addUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "user",
+                    "description": "User Name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user@mail.com",
+                    "description": "user email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": 12345678,
+                    "description": "user password"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "user",
+                          "description": "User Name"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "user@mail.com",
+                          "description": "User Email"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2023-02-23T00:09:16.000000Z",
+                          "description": "creation date"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2023-02-23T00:09:16.000000Z",
+                          "description": "update date"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "example": 1,
+                          "description": "User Id"
+                        }
+                      }
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "1|j7uRTNYPnHB6sUNefoRb4UGXEhzEGMVG8TcOaaCk425ec5b5",
+                      "description": "access_token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "Bearer",
+                      "description": "token_type"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Logs user into the system.",
+        "description": "",
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "user",
+                    "description": "User Name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user@mail.com",
+                    "description": "user email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": 12345678,
+                    "description": "user password"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "user",
+                          "description": "User Name"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "user@mail.com",
+                          "description": "User Email"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "example": "2023-02-23T00:09:16.000000Z",
+                          "description": "creation date"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "example": "2023-02-23T00:09:16.000000Z",
+                          "description": "update date"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "example": 1,
+                          "description": "User Id"
+                        }
+                      }
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "example": "1|j7uRTNYPnHB6sUNefoRb4UGXEhzEGMVG8TcOaaCk425ec5b5",
+                      "description": "access_token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "Bearer",
+                      "description": "token_type"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Logout successful",
+                      "description": "session closed successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/products": {
       "get": {
         "tags": [
           "Products"
@@ -25,8 +252,6 @@
         "summary": "Display a list of resources.",
         "description": "see all products",
         "operationId": "see all products",
-        "parameters": [
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -41,7 +266,12 @@
           "401": {
             "$ref": "#/components/responses/unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -50,8 +280,6 @@
         "summary": "Store a newly created resource in storage.",
         "description": "Add a new product to the store",
         "operationId": "addProduct",
-        "parameters": [
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -96,10 +324,15 @@
           "422": {
             "$ref": "#/components/responses/unprocessable"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
-    "/{id}": {
+    "/products/{id}": {
       "get": {
         "tags": [
           "Products"
@@ -128,7 +361,12 @@
           "404": {
             "$ref": "#/components/responses/notFound"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -198,7 +436,12 @@
           "422": {
             "$ref": "#/components/responses/unprocessable"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -228,7 +471,12 @@
           "404": {
             "$ref": "#/components/responses/notFound"
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -318,6 +566,12 @@
             "description": "update date"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "scheme": "bearer",
+        "type": "http"
       }
     }
   }
