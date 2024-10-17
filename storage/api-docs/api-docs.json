@@ -64,7 +64,12 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {
+                    "message": {
+                      "type": "string",
+                      "description": "User registered successfully",
+                      "example": "User registered successfully"
+                    },
+                    "user": {
                       "type": "object",
                       "properties": {
                         "name": {
@@ -93,16 +98,6 @@
                           "description": "User Id"
                         }
                       }
-                    },
-                    "access_token": {
-                      "type": "string",
-                      "example": "1|j7uRTNYPnHB6sUNefoRb4UGXEhzEGMVG8TcOaaCk425ec5b5",
-                      "description": "access_token"
-                    },
-                    "token_type": {
-                      "type": "string",
-                      "example": "Bearer",
-                      "description": "token_type"
                     }
                   }
                 }
@@ -203,8 +198,21 @@
               }
             }
           },
-          "422": {
-            "$ref": "#/components/responses/unprocessable"
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                 "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid credentials"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -235,6 +243,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
           }
         },
         "security": [
@@ -483,10 +494,23 @@
   "components": {
     "responses": {
       "unauthorized": {
-        "description": "{unauthorized} You are not authorized."
+        "description": "Unauthenticated",
+        "content": {
+          "application/json": {
+             "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unauthenticated"
+                }
+              }
+            }
+          }
+        }
       },
       "notFound": {
-        "description": "{notFound} Information was not found.",
+        "description": "NotFound. Information was not found.",
         "content": {
           "application/json": {
             "schema": {
@@ -505,10 +529,10 @@
         }
       },
       "badRequest": {
-        "description": "{badRequest} Data sent is incorrect."
+        "description": "BadRequest. Data sent is incorrect."
       },
       "unprocessable": {
-        "description": "{unprocessable content} All fields are required"
+        "description": "Unprocessable Content. All fields are required"
       }
     },
     "parameters": {
